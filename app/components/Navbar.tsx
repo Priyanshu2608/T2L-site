@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -26,6 +27,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Trigger initial check
+    
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -107,7 +109,7 @@ export default function Navbar() {
           
           <nav className="nav-links" aria-label="Primary">
             <a href="#">Legal Services</a>
-            <a href="#">Doc Engine</a>
+            <Link href="/docengine">Doc Engine</Link>
             <a href="#">Introspector</a>
             <a href="#">Resources</a>
           </nav>
@@ -143,7 +145,7 @@ export default function Navbar() {
         onKeyDown={handleMenuKeyDown}
       >
         <a href="#" onClick={() => setMenuOpen(false)}>Legal Services</a>
-        <a href="#" onClick={() => setMenuOpen(false)}>Doc Engine</a>
+        <Link href="/docengine" onClick={() => setMenuOpen(false)}>Doc Engine</Link>
         <a href="#" onClick={() => setMenuOpen(false)}>Introspector</a>
         <a href="#" onClick={() => setMenuOpen(false)}>Resources</a>
         <div className="mm-actions">
