@@ -111,7 +111,7 @@ export default function Navbar() {
             <a href="#">Legal Services</a>
             <Link href="/docengine">Doc Engine</Link>
             <a href="#">Introspector</a>
-            <a href="#">Resources</a>
+            <Link href="/resources">Resources</Link>
           </nav>
           
           <div className="nav-cta">
@@ -147,7 +147,7 @@ export default function Navbar() {
         <a href="#" onClick={() => setMenuOpen(false)}>Legal Services</a>
         <Link href="/docengine" onClick={() => setMenuOpen(false)}>Doc Engine</Link>
         <a href="#" onClick={() => setMenuOpen(false)}>Introspector</a>
-        <a href="#" onClick={() => setMenuOpen(false)}>Resources</a>
+        <Link href="/resources" onClick={() => setMenuOpen(false)}>Resources</Link>
         <div className="mm-actions">
           <a href="#" className="btn btn-ghost" onClick={() => setMenuOpen(false)}>Login</a>
           <a href="#contact" className="btn btn-gold" onClick={() => setMenuOpen(false)}>Get Started</a>
