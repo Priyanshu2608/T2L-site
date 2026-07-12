@@ -121,7 +121,7 @@ export default function Navbar({
           </Link>
 
           <nav className="nav-links" aria-label="Primary">
-            <Link href="/" className={pathname === "/" ? "active" : ""}>
+            <Link href="/legal-services" className={pathname === "/legal-services" ? "active" : ""}>
               Legal Services
             </Link>
             <Link href="/docengine" className={pathname === "/docengine" ? "active" : ""}>
