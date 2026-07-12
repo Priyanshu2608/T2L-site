@@ -3,8 +3,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+interface NavbarProps {
+  ctaText?: string;
+  ctaLink?: string;
+  loginText?: string;
+  loginLink?: string;
+}
+
+export default function Navbar({
+  ctaText = "Get Started",
+  ctaLink = "#contact",
+  loginText = "Login",
+  loginLink = "#"
+}: NavbarProps) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -17,7 +31,7 @@ export default function Navbar() {
     const handleScroll = () => {
       const st = window.scrollY || document.documentElement.scrollTop;
       const h = document.documentElement.scrollHeight - window.innerHeight;
-      
+
       // Update sticky class state
       setScrolled(st > 20);
 
@@ -27,7 +41,6 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Trigger initial check
-    
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -63,7 +76,7 @@ export default function Navbar() {
   // Focus trap inside open mobile menu
   const handleMenuKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab" || !menuOpen || !menuRef.current) return;
-    
+
     const focusableElements = menuRef.current.querySelectorAll<
       HTMLAnchorElement | HTMLButtonElement
     >("a, button");
@@ -88,45 +101,55 @@ export default function Navbar() {
   return (
     <>
       {/* Scroll Progress Indicator */}
-      <div 
-        className="progress" 
-        style={{ transform: `scaleX(${scrollProgress})` }} 
+      <div
+        className="progress"
+        style={{ transform: `scaleX(${scrollProgress})` }}
       />
 
       {/* Header / Navbar */}
       <header className={`nav ${scrolled ? "scrolled" : ""}`} id="nav">
         <div className="nav-inner">
-          <a href="#top" className="brand" aria-label="Turn2Law home">
-            <Image 
-              className="brand-logo" 
-              src="/turn2law-logo.png" 
-              alt="Turn2Law" 
-              width={180} 
-              height={51} 
+          <Link href="/" className="brand" aria-label="Turn2Law home">
+            <Image
+              className="brand-logo"
+              src="/turn2law-logo.png"
+              alt="Turn2Law"
+              width={180}
+              height={51}
               priority
             />
-          </a>
-          
+          </Link>
+
           <nav className="nav-links" aria-label="Primary">
-            <a href="#">Legal Services</a>
-            <Link href="/docengine">Doc Engine</Link>
-            <a href="#">Introspector</a>
-            <Link href="/resources">Resources</Link>
+            <Link href="/" className={pathname === "/" ? "active" : ""}>
+              Legal Services
+            </Link>
+            <Link href="/docengine" className={pathname === "/docengine" ? "active" : ""}>
+              Doc Engine
+            </Link>
+            <Link href="/introspector" className={pathname === "/introspector" ? "active" : ""}>
+              Introspector
+            </Link>
+            <Link href="/resources" className={pathname === "/resources" ? "active" : ""}>
+              Resources
+            </Link>
           </nav>
-          
+
           <div className="nav-cta">
-            <a href="#" className="nav-login">Login</a>
-            <a href="#contact" className="btn btn-gold">
-              Get Started
+            <Link href={loginLink} className="nav-login">
+              {loginText}
+            </Link>
+            <Link href={ctaLink} className="btn btn-gold">
+              {ctaText}
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 17 17 7M17 7H7M17 7v10"></path>
               </svg>
-            </a>
-            <button 
+            </Link>
+            <button
               ref={burgerRef}
-              className="burger" 
-              id="burger" 
-              aria-label="Open menu" 
+              className="burger"
+              id="burger"
+              aria-label="Open menu"
               aria-expanded={menuOpen}
               onClick={toggleMenu}
             >
@@ -137,20 +160,32 @@ export default function Navbar() {
       </header>
 
       {/* Mobile Menu */}
-      <nav 
+      <nav
         ref={menuRef}
-        className="mobile-menu" 
-        id="mobileMenu" 
+        className="mobile-menu"
+        id="mobileMenu"
         aria-label="Mobile"
         onKeyDown={handleMenuKeyDown}
       >
-        <a href="#" onClick={() => setMenuOpen(false)}>Legal Services</a>
-        <Link href="/docengine" onClick={() => setMenuOpen(false)}>Doc Engine</Link>
-        <a href="#" onClick={() => setMenuOpen(false)}>Introspector</a>
-        <Link href="/resources" onClick={() => setMenuOpen(false)}>Resources</Link>
+        <Link href="/" className={pathname === "/" ? "active" : ""} onClick={() => setMenuOpen(false)}>
+          Legal Services
+        </Link>
+        <Link href="/docengine" className={pathname === "/docengine" ? "active" : ""} onClick={() => setMenuOpen(false)}>
+          Doc Engine
+        </Link>
+        <Link href="/introspector" className={pathname === "/introspector" ? "active" : ""} onClick={() => setMenuOpen(false)}>
+          Introspector
+        </Link>
+        <Link href="/resources" className={pathname === "/resources" ? "active" : ""} onClick={() => setMenuOpen(false)}>
+          Resources
+        </Link>
         <div className="mm-actions">
-          <a href="#" className="btn btn-ghost" onClick={() => setMenuOpen(false)}>Login</a>
-          <a href="#contact" className="btn btn-gold" onClick={() => setMenuOpen(false)}>Get Started</a>
+          <Link href={loginLink} className="btn btn-ghost" onClick={() => setMenuOpen(false)}>
+            {loginText}
+          </Link>
+          <Link href={ctaLink} className="btn btn-gold" onClick={() => setMenuOpen(false)}>
+            {ctaText}
+          </Link>
         </div>
       </nav>
     </>

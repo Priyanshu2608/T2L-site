@@ -5,15 +5,15 @@ import React, { useState, useRef, useEffect } from "react";
 interface FAQCardProps {
   question: string;
   answer: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   defaultOpen?: boolean;
   delayStyle?: React.CSSProperties;
 }
 
-export default function FAQCard({ 
-  question, 
-  answer, 
-  icon, 
+export default function FAQCard({
+  question,
+  answer,
+  icon,
   defaultOpen = false,
   delayStyle = {}
 }: FAQCardProps) {
@@ -47,22 +47,22 @@ export default function FAQCard({
   };
 
   return (
-    <div 
-      className={`faq-card reveal in ${isOpen ? "open" : ""}`} 
+    <div
+      className={`faq-card reveal in ${isOpen ? "open" : ""}`}
       style={delayStyle}
       data-faq
     >
-      <button 
-        className="faq-q2" 
-        type="button" 
+      <button
+        className="faq-q2"
+        type="button"
         aria-expanded={isOpen}
         onClick={toggleOpen}
       >
-        <span className="faq-ico2">{icon}</span>
+        {icon && <span className="faq-ico2">{icon}</span>}
         <span className="faq-qtext">{question}</span>
         <span className="faq-toggle"></span>
       </button>
-      <div 
+      <div
         ref={panelRef}
         className="faq-panel2"
         style={{ transition: "max-height 0.5s var(--ease)" }}
