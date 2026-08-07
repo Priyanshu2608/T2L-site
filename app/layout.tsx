@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, DM_Mono } from "next/font/google";
 import "./globals.css";
+import LegalChatbot from "./components/LegalChatbot";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,8 +39,12 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${poppins.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <LegalChatbot />
+      </body>
     </html>
   );
 }
+
 
