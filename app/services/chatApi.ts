@@ -29,12 +29,25 @@ export interface HealthResponse {
  * falling back to NEXT_PUBLIC_CHAT_API_URL or local default http://localhost:8001.
  */
 export function getChatApiUrl(): string {
-  const url =
-    process.env.VITE_CHAT_API_URL ||
+  const envUrl =
     process.env.NEXT_PUBLIC_CHAT_API_URL ||
-    "http://localhost:8001";
-  return url.replace(/\/$/, "");
+    process.env.VITE_CHAT_API_URL;
+
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
+  }
+
+  // Runtime browser fallback: if running on production domain (e.g. vercel.app), use public HTTPS backend
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host !== "localhost" && host !== "127.0.0.1") {
+      return "https://c9d14cb5cd07a8.lhr.life";
+    }
+  }
+
+  return "http://localhost:8002";
 }
+
 
 /**
  * Sends a legal query to the FastAPI RAG backend endpoint (/api/query).
