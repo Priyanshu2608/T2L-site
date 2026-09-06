@@ -41,12 +41,13 @@ export function getChatApiUrl(): string {
   if (typeof window !== "undefined") {
     const host = window.location.hostname;
     if (host !== "localhost" && host !== "127.0.0.1") {
-      return "https://c9d14cb5cd07a8.lhr.life";
+      return "https://6099fb298af9fded-223-187-113-176.serveousercontent.com";
     }
   }
 
   return "http://localhost:8002";
 }
+
 
 
 /**
